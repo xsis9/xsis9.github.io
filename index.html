@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>xsis9</title>
+  <title>xsis9 - 记录学习与生活</title>
   <style>
     * {
       margin: 0;
@@ -20,67 +20,229 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       color: #fff;
       padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* 动态背景 */
+    .bg-bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-bubbles li {
+      position: absolute;
+      display: block;
+      list-style: none;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 15s infinite;
+      bottom: -100px;
+    }
+    .bg-bubbles li:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .bg-bubbles li:nth-child(2) { left: 20%; animation-delay: 2s; width: 30px; height: 30px; }
+    .bg-bubbles li:nth-child(3) { left: 30%; animation-delay: 4s; }
+    .bg-bubbles li:nth-child(4) { left: 40%; animation-delay: 6s; width: 15px; height: 15px; }
+    .bg-bubbles li:nth-child(5) { left: 50%; animation-delay: 8s; }
+    .bg-bubbles li:nth-child(6) { left: 60%; animation-delay: 10s; width: 25px; height: 25px; }
+    .bg-bubbles li:nth-child(7) { left: 70%; animation-delay: 12s; }
+    .bg-bubbles li:nth-child(8) { left: 80%; animation-delay: 14s; width: 18px; height: 18px; }
+    .bg-bubbles li:nth-child(9) { left: 90%; animation-delay: 1s; }
+    .bg-bubbles li:nth-child(10) { left: 15%; animation-delay: 3s; width: 22px; height: 22px; }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
     .avatar {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 48px;
+      font-size: 56px;
       font-weight: bold;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+      animation: pulse 3s ease-in-out infinite;
+      position: relative;
+    }
+    .avatar::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid rgba(102, 126, 234, 0.5);
+      animation: ripple 2s ease-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    @keyframes ripple {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
+    .greeting {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 8px;
+      letter-spacing: 2px;
     }
     .bio {
-      font-size: 18px;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 48px;
-      text-align: center;
+      font-size: 24px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .tags {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 500px;
+    }
+    .tag {
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.7);
     }
     .links {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       flex-wrap: wrap;
       justify-content: center;
+      margin-bottom: 48px;
     }
     .card {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 16px;
-      padding: 24px 48px;
+      padding: 20px 32px;
       text-decoration: none;
       color: #fff;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 500;
       transition: all 0.3s ease;
-      min-width: 140px;
+      min-width: 120px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+    .card:hover::before {
+      left: 100%;
     }
     .card:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
       transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    }
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .social {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .social a {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .social a:hover {
+      color: #fff;
     }
     footer {
       position: fixed;
       bottom: 20px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.5);
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
     }
   </style>
 </head>
 <body>
-  <div class="avatar">X</div>
-  <p class="bio">记录学习与生活的点点滴滴</p>
-  <div class="links">
-    <a href="/MyNote/" class="card">笔记</a>
-    <a href="/game" class="card">游戏</a>
-    <a href="/fun" class="card">娱乐</a>
+  <ul class="bg-bubbles">
+    <li></li><li></li><li></li><li></li><li></li>
+    <li></li><li></li><li></li><li></li><li></li>
+  </ul>
+  <div class="content">
+    <div class="avatar">X</div>
+    <p class="greeting" id="greeting">晚上好</p>
+    <p class="bio">记录学习与生活的点点滴滴</p>
+    <div class="tags">
+      <span class="tag">机器学习</span>
+      <span class="tag">数学</span>
+      <span class="tag">算法</span>
+      <span class="tag">折腾</span>
+    </div>
+    <div class="links">
+      <a href="/MyNote/" class="card">
+        <span class="card-icon">📚</span>
+        笔记
+      </a>
+      <a href="/game" class="card">
+        <span class="card-icon">🎮</span>
+        游戏
+      </a>
+      <a href="/fun" class="card">
+        <span class="card-icon">🎬</span>
+        娱乐
+      </a>
+    </div>
+    <div class="social">
+      <a href="https://github.com/xsis9" target="_blank">GitHub</a>
+      <a href="/MyNote/tags">标签</a>
+      <a href="/MyNote/categories">分类</a>
+    </div>
   </div>
   <footer>© 2026 xsis9</footer>
+  <script>
+    const hour = new Date().getHours();
+    const greet = document.getElementById('greeting');
+    if (hour < 6) greet.textContent = '夜深了';
+    else if (hour < 9) greet.textContent = '早上好';
+    else if (hour < 12) greet.textContent = '上午好';
+    else if (hour < 14) greet.textContent = '中午好';
+    else if (hour < 18) greet.textContent = '下午好';
+    else if (hour < 22) greet.textContent = '晚上好';
+    else greet.textContent = '夜深了';
+  </script>
 </body>
 </html>
